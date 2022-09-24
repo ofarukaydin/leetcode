@@ -19,7 +19,6 @@ class Solution:
                 return False
             
             visited.add(node)
-            print('visited:' + ' ' + str(node))
 
             for nei in adj[node]:
                 if nei != prev and not dfs(nei, node): return False
