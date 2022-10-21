@@ -1,5 +1,5 @@
 # @before-stub-for-debug-begin
-from collections import deque
+from python3problem994 import *
 from typing import *
 # @before-stub-for-debug-end
 
@@ -10,42 +10,42 @@ from typing import *
 #
 
 # @lc code=start
+from collections import deque
 
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        maxRows, maxCols = len(grid), len(grid[0])
-        deq = deque()
+        queue = deque()
+        ROWS, COLS = len(grid), len(grid[0])
+        freshOranges = 0
         time = 0
-        fresh = 0
 
-        for row in range(maxRows):
-            for col in range(maxCols):
+        for row in range(ROWS):
+            for col in range(COLS):
                 if grid[row][col] == 2:
-                    deq.append((row, col))
-                elif grid[row][col] == 1:
-                    fresh += 1
+                    queue.append((row, col))
+                if grid[row][col] == 1:
+                    freshOranges += 1
 
-        directions = [[0, -1], [0, 1], [1, 0], [-1, 0]]
-        while deq and fresh > 0:
-            rottenOranges = len(deq)
+        while freshOranges > 0 and queue:
+            for _ in range(len(queue)):
+                row, col = queue.popleft()
+                directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 
-            for _ in range(rottenOranges):
-                r, c = deq.popleft()
+                for dx, dy in directions:
+                    newRow, newCol = dx + row, dy + col
 
-                for dr, dc in directions:
-                    row, col = r + dr, c + dc
-                    # if in bounds and nonrotten, make rotten
-                    # and add to q
                     if (
-                        row in range(len(grid))
-                        and col in range(len(grid[0]))
-                        and grid[row][col] == 1
+                        newRow in range(ROWS) and
+                        newCol in range(COLS) and
+                        grid[newRow][newCol] == 1
                     ):
-                        grid[row][col] = 2
-                        deq.append((row, col))
-                        fresh -= 1
+                        queue.append((newRow, newCol))
+                        grid[newRow][newCol] = 2
+                        freshOranges -= 1
             time += 1
-        return time if fresh == 0 else -1
+
+        return time if freshOranges == 0 else -1
+
 
 # @lc code=end

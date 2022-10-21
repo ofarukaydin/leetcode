@@ -1,3 +1,9 @@
+# @before-stub-for-debug-begin
+from python3problem207 import *
+from typing import *
+
+# @before-stub-for-debug-end
+
 #
 # @lc app=leetcode id=207 lang=python3
 #
@@ -5,36 +11,33 @@
 #
 
 # @lc code=start
+
+
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        preqMap = {i: [] for i in range(numCourses)}
+        adjMap = {i: [] for i in range(numCourses)}
         visited = set()
 
-        for crs, preq in prerequisites:
-            preqMap[crs].append(preq)
+        for src, dst in prerequisites:
+            adjMap[src].append(dst)
 
-        def dfs(crs):
-            if crs in visited:
+        def dfs(node):
+            if node in visited:
                 return False
-            if preqMap[crs] == []:
-                return True
 
-            visited.add(crs)
-
-            for preq in preqMap[crs]:
-                if not dfs(preq):
+            visited.add(node)
+            for nei in adjMap[node]:
+                if not dfs(nei):
                     return False
 
-            visited.remove(crs)
-            preqMap[crs] = []
-
+            visited.remove(node)
+            adjMap[node] = []
             return True
 
-        for crs in range(numCourses):
-            if not dfs(crs):
+        for node in adjMap:
+            if not dfs(node):
                 return False
 
         return True
 
-
-# @lc code=end
+        # @lc code=end

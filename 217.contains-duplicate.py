@@ -5,13 +5,14 @@
 #
 
 # @lc code=start
-from typing import List
-
-
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        res = set(nums)
-        return len(res) != len(nums)
-        
-# @lc code=end
+        hashMap = {}
 
+        for num in nums:
+            if num in hashMap:
+                return True
+            hashMap[num] = True
+        return False
+
+# @lc code=end

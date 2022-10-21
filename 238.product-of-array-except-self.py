@@ -1,8 +1,3 @@
-# @before-stub-for-debug-begin
-from python3problem238 import *
-from typing import *
-# @before-stub-for-debug-end
-
 #
 # @lc app=leetcode id=238 lang=python3
 #
@@ -10,24 +5,21 @@ from typing import *
 #
 
 # @lc code=start
-from typing import List
-
-
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        output = [1] * len(nums)
+        res = [1 for _ in nums]
+        currProduct = 1
 
-        prefix = 1
-        for i in range(len(nums)):
-            output[i] = prefix
-            prefix *= nums[i]
+        for index, num in enumerate(nums):
+            res[index] = currProduct
+            currProduct *= num
 
-        postfix = 1
-        for i in range(len(nums) - 1, -1, -1):
-            output[i] *= postfix
-            postfix *= nums[i]
+        currProduct = 1
 
-        return output
+        for index in range(len(nums) - 1, -1, -1):
+            res[index] *= currProduct
+            currProduct *= nums[index]
 
+        return res
 
 # @lc code=end

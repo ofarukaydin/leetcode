@@ -11,25 +11,34 @@ import heapq
 
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        minheap = [(0, 0)]
+        N = len(points)
         adjMap = defaultdict(list)
+
+        for i in range(N):
+            x1, y1 = points[i]
+            for j in range(i + 1, N):
+                x2, y2 = points[j]
+                cost = abs(x1 - x2) + abs(y1 - y2)
+                adjMap[i].append((cost, j))
+                adjMap[j].append((cost, i))
+
         visited = set()
+        minHeap = [(0, 0)]  # (cost, node)
+
         res = 0
+        while len(visited) < N:
+            cost, node = heapq.heappop(minHeap)
 
-        for i in range(len(points)):
-            for j in range(len(points)):
-                if i != j:
-                    dist = abs(points[i][0] - points[j][0]) + \
-                        abs(points[i][1] - points[j][1])
-                    adjMap[i].append((dist, j))
+            if node in visited:
+                continue
 
-        while len(visited) != len(adjMap):
-            cost, v = heapq.heappop(minheap)
-            if v not in visited:
-                visited.add(v)
-                res += cost
-                for cost, nei in adjMap[v]:
-                    heapq.heappush(minheap, (cost, nei))
+            visited.add(node)
+            res += cost
+            for neiCost, neiNode in adjMap[node]:
+                if neiNode not in visited:
+                    heapq.heappush(minHeap, (neiCost, neiNode))
 
         return res
-        # @lc code=end
+
+
+# @lc code=end

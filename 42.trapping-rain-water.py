@@ -1,3 +1,8 @@
+# @before-stub-for-debug-begin
+from python3problem42 import *
+from typing import *
+# @before-stub-for-debug-end
+
 #
 # @lc app=leetcode id=42 lang=python3
 #
@@ -5,36 +10,24 @@
 #
 
 # @lc code=start
+
+
 class Solution:
     def trap(self, height: List[int]) -> int:
+        currMaxLeft, currMaxRight = height[0], height[-1]
+        left, right = 0, len(height) - 1
         trappedWaters = 0
-        left = 0
 
-        while left < len(height) - 1:
-            if height[left] == 0:
+        while left < right:
+            if currMaxLeft <= currMaxRight:
                 left += 1
-                continue
-
-            right = left + 1
-            currentTrappedWaters = 0
-
-            while (
-                right < len(height) and
-                height[right] < height[left]
-            ):
-                diff = height[left] - height[right]
-                currentTrappedWaters += diff
-                right += 1
-
-            if right < len(height):
-                trappedWaters += currentTrappedWaters
-                left = right
-                continue
+                currMaxLeft = max(currMaxLeft, height[left])
+                trappedWaters += currMaxLeft - height[left]
             else:
-                reversedList = list(reversed(height[left:right]))
-                return trappedWaters + self.trap(reversedList)
+                right -= 1
+                currMaxRight = max(currMaxRight, height[right])
+                trappedWaters += currMaxRight - height[right]
 
         return trappedWaters
-
 
 # @lc code=end

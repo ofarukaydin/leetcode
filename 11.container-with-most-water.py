@@ -10,26 +10,21 @@ from typing import *
 #
 
 # @lc code=start
+
+
 class Solution:
     def maxArea(self, height: List[int]) -> int:
-        leftPointer, rightPointer = 0, len(height) - 1
-        maxArea = 0
-        while leftPointer < rightPointer:
-            areaW = rightPointer - leftPointer
-            areaH = min(height[leftPointer], height[rightPointer])
-            maxArea = max(maxArea, areaH * areaW)
-            
-            if height[leftPointer] < height[rightPointer]:
-                leftPointer += 1
-            elif height[rightPointer] < height[leftPointer]:
-                rightPointer -= 1
-            else:
-                leftPointer += 1
-        return maxArea
-            
-            
+        currMax = 0
+        left, right = 0, len(height) - 1
 
+        while left < right:
+            currArea = min(height[left], height[right]) * \
+                (right - left)
+            currMax = max(currMax, currArea)
+            if height[left] < height[right]:
+                left += 1
+            elif height[right] <= height[left]:
+                right -= 1
+        return currMax
 
-        
 # @lc code=end
-

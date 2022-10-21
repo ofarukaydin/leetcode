@@ -1,8 +1,3 @@
-# @before-stub-for-debug-begin
-from python3problem1 import *
-from typing import *
-# @before-stub-for-debug-end
-
 #
 # @lc app=leetcode id=1 lang=python3
 #
@@ -10,17 +5,13 @@ from typing import *
 #
 
 # @lc code=start
-from typing import List
-
-
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        numsMap = {}
+        diff = [target - num for num in nums]
+        hashMap = {num: i for i, num in enumerate(nums)}
 
-        for index, value in enumerate(nums):
-            if target - value in numsMap:
-                return [numsMap[target - value], index]
-            numsMap[value] = index
+        for i, num in enumerate(diff):
+            if num in hashMap and i != hashMap[num]:
+                return [i, hashMap[num]]
 
-
-# @lc code=end
+            # @lc code=end

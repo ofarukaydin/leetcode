@@ -1,3 +1,8 @@
+# @before-stub-for-debug-begin
+from python3problem105 import *
+from typing import *
+# @before-stub-for-debug-end
+
 #
 # @lc app=leetcode id=105 lang=python3
 #
@@ -19,15 +24,14 @@ class Solution:
         if not preorder or not inorder:
             return None
 
-        mid = inorder.index(preorder[0])
-        node = TreeNode(preorder[0])
+        rootIndex = inorder.index(preorder[0])
 
-        node.left = self.buildTree(preorder[1: mid + 1], inorder[:mid])
-        node.right = self.buildTree(preorder[mid + 1:] , inorder[mid + 1:])
+        root = TreeNode(preorder[0])
+        root.left = self.buildTree(
+            preorder[1:rootIndex+1], inorder[:rootIndex])
+        root.right = self.buildTree(
+            preorder[rootIndex+1:], inorder[rootIndex+1:])
 
-        return node
+        return root
 
-
-        
 # @lc code=end
-

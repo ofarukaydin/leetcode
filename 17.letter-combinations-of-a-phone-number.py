@@ -1,8 +1,3 @@
-# @before-stub-for-debug-begin
-from python3problem17 import *
-from typing import *
-# @before-stub-for-debug-end
-
 #
 # @lc app=leetcode id=17 lang=python3
 #
@@ -10,11 +5,11 @@ from typing import *
 #
 
 # @lc code=start
-
-
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        digitMap = {
+        combinations = []
+
+        digitToChar = {
             "2": "abc",
             "3": "def",
             "4": "ghi",
@@ -24,19 +19,19 @@ class Solution:
             "8": "tuv",
             "9": "wxyz",
         }
-        res = []
 
-        def dfs(i, currStr):
-            if i >= len(digits):
-                if currStr:
-                    res.append(currStr)
+        def backtrack(i, currStr):
+            if len(digits) == len(currStr):
+                combinations.append(currStr)
                 return
 
-            digitAsChar = digits[i]
-            for c in digitMap[digitAsChar]:
-                dfs(i+1, currStr + c)
+            for char in digitToChar[digits[i]]:
+                backtrack(i+1, currStr + char)
 
-        dfs(0, '')
+        if digits:
+            backtrack(0, '')
 
-        return res
+        return combinations
+
+
 # @lc code=end

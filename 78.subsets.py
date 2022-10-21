@@ -1,8 +1,3 @@
-# @before-stub-for-debug-begin
-from python3problem78 import *
-from typing import *
-# @before-stub-for-debug-end
-
 #
 # @lc app=leetcode id=78 lang=python3
 #
@@ -10,27 +5,21 @@ from typing import *
 #
 
 # @lc code=start
-
-
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
 
-        subset = []
-
-        def dfs(i):
-            if i >= len(nums):
-                res.append(subset.copy())
+        def dfs(i, path):
+            if i == len(nums):
+                res.append(path.copy())
                 return
 
-            subset.append(nums[i])
-            dfs(i + 1)
+            path.append(nums[i])
+            dfs(i + 1, path)  # include the number
 
-            subset.pop()
-            dfs(i + 1)
+            path.pop()
+            dfs(i + 1, path)  # don't include the number
 
-        dfs(0)
-
+        dfs(0, [])
         return res
-
-        # @lc code=end
+# @lc code=end

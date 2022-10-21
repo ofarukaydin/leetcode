@@ -1,8 +1,3 @@
-# @before-stub-for-debug-begin
-from python3problem199 import *
-from typing import *
-# @before-stub-for-debug-end
-
 #
 # @lc app=leetcode id=199 lang=python3
 #
@@ -16,23 +11,33 @@ from typing import *
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import deque
 
 
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+
+        deq = deque()
+        deq.append(root)
         res = []
 
-        def dfs(root, depth):
-            if not root:
-                return
+        while deq:
+            lastIndex = len(deq) - 1
+            for i in range(len(deq)):
+                node = deq.popleft()
 
-            if depth == len(res):
-                res.append(root.val)
-            
-            dfs(root.right, depth + 1)
-            dfs(root.left, depth + 1)
-
-        dfs(root, 0)
+                if i == lastIndex:
+                    res.append(node.val)
+                
+                if node.left:
+                    deq.append(node.left)
+                if node.right:
+                    deq.append(node.right)
+                
         return res
+            
 
-        # @lc code=end
+
+# @lc code=end

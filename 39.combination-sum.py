@@ -9,19 +9,19 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []
 
-        def dfs(i, cur, total):
-            if target == total:
-                res.append(cur.copy())
+        def dfs(i, currentSum, path):
+            if currentSum == target:
+                res.append(path.copy())
                 return
-            if i >= len(candidates) or total > target:
+            if i == len(candidates) or currentSum > target:
                 return
 
-            cur.append(candidates[i])
-            dfs(i, cur, total + candidates[i])
-            cur.pop()
-            dfs(i + 1, cur, total)
+            path.append(candidates[i])
+            dfs(i, currentSum + candidates[i], path)
 
-        dfs(0, [], 0)
+            path.pop()
+            dfs(i + 1, currentSum, path)
+
+        dfs(0, 0, [])
         return res
-
-# @lc code=end
+        # @lc code=end

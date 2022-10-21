@@ -1,8 +1,3 @@
-# @before-stub-for-debug-begin
-from python3problem46 import *
-from typing import *
-# @before-stub-for-debug-end
-
 #
 # @lc app=leetcode id=46 lang=python3
 #
@@ -10,22 +5,23 @@ from typing import *
 #
 
 # @lc code=start
-
-
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        res = []
-        self.dfs(nums, [], res)
+        def backtrack(i):
+            if i == len(nums):
+                return [[]]
 
-        return res
+            nextPerms = backtrack(i+1)
+            resPerms = []
 
-    def dfs(self, nums, path, res):
-        if not nums:
-            res.append(path)
-            return
+            for perm in nextPerms:
+                for j in range(len(perm) + 1):
+                    permCopy = perm.copy()
+                    permCopy.insert(j, nums[i])
+                    resPerms.append(permCopy)
 
-        for i in range(len(nums)):
-            self.dfs(nums[0:i] + nums[i+1:], path+[nums[i]], res)
+            return resPerms
 
+        return backtrack(0)
 
 # @lc code=end

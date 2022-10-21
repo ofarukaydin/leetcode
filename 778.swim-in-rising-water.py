@@ -15,32 +15,33 @@ import heapq
 
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
-        N = len(grid)
-        minHeap = [(grid[0][0], 0, 0)]  # cost, r, c
+        rows, cols = len(grid), len(grid[0])
+        minHeap = [(grid[0][0], 0, 0)]  # (elevation, (row, col))
         visited = set()
-        directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+        time = 0
+        visited.add((0, 0))
 
         while minHeap:
-            cost, row, col = heapq.heappop(minHeap)
+            while minHeap and minHeap[0][0] <= time:
+                elevation, row, col = heapq.heappop(minHeap)
 
-            if row == N - 1 and col == N - 1:
-                return cost
+                if grid[row][col] == grid[-1][-1]:
+                    return time
 
-            if (row, col) not in visited:
-                visited.add((row, col))
+                directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 
                 for dr, dc in directions:
-                    neiRow, neiCol = row + dr, col + dc
+                    newRow = dr + row
+                    newCol = dc + col
                     if (
-                        neiRow < 0
-                        or neiCol < 0
-                        or neiRow == N
-                        or neiCol == N
-                        or (neiRow, neiCol) in visited
+                        newRow in range(rows) and
+                        newCol in range(cols) and
+                        (newRow, newCol) not in visited
                     ):
-                        continue
+                        visited.add((newRow, newCol))
+                        heapq.heappush(
+                            minHeap, (max(elevation, grid[newRow][newCol]), newRow, newCol))
+            time += 1
 
-                    heapq.heappush(
-                        minHeap, (max(cost, grid[neiRow][neiCol]), neiRow, neiCol))
 
-        # @lc code=end
+# @lc code=end

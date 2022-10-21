@@ -10,49 +10,39 @@ from typing import *
 #
 
 # @lc code=start
-from collections import deque
 
 
 class Solution:
-
-
     def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
 
         visited = set()
-        islands = 0
-        rowLen = range(len(grid))
-        colLen = range(len(grid[0]))
+        ROWS, COLS = len(grid), len(grid[0])
+        res = 0
 
-        def bfs(row, column):
-            queue = deque()
-            directions = [(0, 1), (0, -1), (-1, 0), (1, 0)]
-            queue.append((row, column))
+        def dfs(row, col):
+            if (
+                row not in range(ROWS) or
+                col not in range(COLS) or
+                grid[row][col] == '0' or
+                (row, col) in visited
+            ):
+                return
 
-            while queue:
-                (row, column) = queue.popleft()
+            visited.add((row, col))
 
-                for deltaRow, deltaColumn in directions:
-                    rowToVisit, columnToVisit = row + deltaRow, column + deltaColumn
-                    if (rowToVisit in rowLen and
-                        columnToVisit in colLen and
-                        grid[rowToVisit][columnToVisit] == '1' and
-                        (rowToVisit, columnToVisit) not in visited
-                        ):
-                        queue.append((rowToVisit, columnToVisit))
-                    visited.add((rowToVisit, columnToVisit))
+            dfs(row + 1, col)
+            dfs(row - 1, col)
+            dfs(row, col + 1)
+            dfs(row, col - 1)
 
-        for row in rowLen:
-            for column in colLen:
-                if grid[row][column] == '1' and (row, column) not in visited:
-                    bfs(row, column)
-                    islands += 1
-                visited.add((row, column))
-
-        return islands
-
-
-
-
+        for row in range(ROWS):
+            for col in range(COLS):
+                if grid[row][col] == '1' and (row, col) not in visited:
+                    res += 1
+                dfs(row, col)
+        return res
 
 
 # @lc code=end

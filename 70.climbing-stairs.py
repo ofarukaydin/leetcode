@@ -5,15 +5,21 @@
 #
 
 # @lc code=start
+from functools import lru_cache
+
+
 class Solution:
     def climbStairs(self, n: int) -> int:
-        one, two = 1, 1
+        @lru_cache(maxsize=None)
+        def aux(start, target):
+            if start == target:
+                return 1
+            elif start > target:
+                return 0
 
-        for i in range(n - 1):
-            temp = one
-            one = one + two
-            two = temp
+            return aux(start + 1, target) + aux(start + 2, target)
 
-        return one
+        return aux(0, n)
+
 
 # @lc code=end

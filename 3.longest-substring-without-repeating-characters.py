@@ -5,33 +5,28 @@ from typing import *
 
 #
 # @lc app=leetcode id=3 lang=python3
-#x§
+#
 # [3] Longest Substring Without Repeating Characters
 #
 
 # @lc code=start
+
+
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        leftPointer, rightPointer = 0, 0
-        maxLength = 0
-        substrSet = set()
+        window = set()
+        left = 0
+        length = float('-inf')
 
-        while rightPointer < len(s):
-            while s[rightPointer] in substrSet:
-                substrSet.remove(s[leftPointer])
-                leftPointer += 1
-            substrSet.add(s[rightPointer])
-            maxLength = max(maxLength, rightPointer - leftPointer + 1)
-            rightPointer += 1
-        return maxLength
+        for right in range(len(s)):
+            while s[right] in window:
+                window.remove(s[left])
+                left += 1
+            length = max(length, right - left + 1)
+
+            window.add(s[right])
+
+        return 0 if length == float('-inf') else length
 
 
-
-
-            
-
-            
-
-        
 # @lc code=end
-

@@ -20,12 +20,13 @@ class Solution:
             while curr:
                 stack.append(curr)
                 curr = curr.left
-            curr = stack.pop()
+
+            node = stack.pop()
             k -= 1
+            if k == 0:
+                return node.val
 
-            if k == 0: return curr.val
-            curr = curr.right
-
+            curr = node.right
 
 
 # @lc code=end

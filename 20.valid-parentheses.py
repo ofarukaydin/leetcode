@@ -7,17 +7,25 @@
 # @lc code=start
 class Solution:
     def isValid(self, s: str) -> bool:
+        CLOSE_P = [')', ']', '}']
+        PARAN_MAP = {
+            '(': ')',
+            '{': '}',
+            '[': ']',
+        }
+
         stack = []
-        closingMap = {'}': '{', ')': '(', ']' : '[' }
-        for char in s:
-            if char in closingMap:
-                if stack and stack[-1] == closingMap[char]:
+        for paran in s:
+            if paran not in CLOSE_P:
+                stack.append(paran)
+            else:
+                if stack and PARAN_MAP[stack[-1]] == paran:
                     stack.pop()
                 else:
                     return False
-            else:
-                stack.append(char)
 
-        return True if not stack else False
+        return len(stack) == 0
+            
 
-        # @lc code=end
+
+# @lc code=end

@@ -21,19 +21,22 @@ class Node:
 
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
-        oldToNewMap = {}
+        cloneMap = {}
 
         def dfs(node):
-            if node in oldToNewMap:
-                return oldToNewMap[node]
+            if node in cloneMap:
+                return cloneMap[node]
 
-            copy = Node(node.val)
-            oldToNewMap[node] = copy
+            clonedNode = Node(node.val)
+            cloneMap[node] = clonedNode
 
-            for nei in node.neighbors:
-                copy.neighbors.append(dfs(nei))
-            return copy
+            for neighbor in node.neighbors:
+                neiNode = dfs(neighbor)
+                clonedNode.neighbors.append(neiNode)
+
+            return clonedNode
 
         return dfs(node) if node else None
+
 
 # @lc code=end

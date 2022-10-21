@@ -17,23 +17,24 @@ import heapq
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
         adjMap = defaultdict(list)
-        minHeap = [(0, k)]
-        visited = set()
-        res = 0
 
-        for u, v, w in times:
-            adjMap[u].append((w, v))
+        for src, dst, weight in times:
+            adjMap[src].append((dst, weight))
+
+        shortestPaths = {}
+        minHeap = [(0, k)]  # cost to reach, node
 
         while minHeap:
-            cost, v = heapq.heappop(minHeap)
-            if v not in visited:
-                res = cost
-                visited.add(v)
+            cost, node = heapq.heappop(minHeap)
 
-                for w, nei in adjMap[v]:
-                    heapq.heappush(minHeap, (cost + w, nei))
+            if node in shortestPaths:
+                continue
 
-        return res if len(visited) >= n else -1
+            shortestPaths[node] = cost
+            for dst, weight in adjMap[node]:
+                if dst not in shortestPaths:
+                    heapq.heappush(minHeap, (cost + weight, dst))
 
+        return max(shortestPaths.values()) if len(shortestPaths) == n else -1
 
-# @lc code=end
+        # @lc code=end

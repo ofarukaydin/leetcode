@@ -1,3 +1,8 @@
+# @before-stub-for-debug-begin
+from python3problem53 import *
+from typing import *
+# @before-stub-for-debug-end
+
 #
 # @lc app=leetcode id=53 lang=python3
 #
@@ -5,19 +10,17 @@
 #
 
 # @lc code=start
+
+
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        currSum = 0
-        maxSum = float('-inf')
+        maxSum = nums[0]
+        curSum = 0
 
         for n in nums:
-            if currSum < 0:
-                currSum = 0
-            currSum += n
-            maxSum = max(maxSum, currSum)
-        
-
+            curSum = max(curSum + n, n)
+            maxSum = max(maxSum, curSum)
         return maxSum
-        
-# @lc code=end
 
+
+# @lc code=end

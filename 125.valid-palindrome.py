@@ -1,8 +1,3 @@
-# @before-stub-for-debug-begin
-from python3problem125 import *
-from typing import *
-# @before-stub-for-debug-end
-
 #
 # @lc app=leetcode id=125 lang=python3
 #
@@ -10,23 +5,24 @@ from typing import *
 #
 
 # @lc code=start
+
+
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        startIndex = 0
-        endIndex = len(s) - 1
+        left, right = 0, len(s) - 1
 
-        while startIndex < endIndex:
-            while not s[startIndex].isalnum() and startIndex < endIndex:
-                startIndex += 1
-
-            while not s[endIndex].isalnum() and endIndex > startIndex:
-                endIndex -= 1
-
-            if s[startIndex].lower() != s[endIndex].lower():
+        while left < right:
+            if not s[left].isalnum():
+                left += 1
+                continue
+            elif not s[right].isalnum():
+                right -= 1
+                continue
+            elif s[left].lower() != s[right].lower():
                 return False
 
-            startIndex += 1
-            endIndex -= 1
+            left += 1
+            right -= 1
 
         return True
 

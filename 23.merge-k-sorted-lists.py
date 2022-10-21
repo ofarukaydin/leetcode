@@ -16,32 +16,33 @@ class Solution:
             return None
 
         while len(lists) > 1:
-            mergedLists = []
+            mergedList = []
+
             for i in range(0, len(lists), 2):
-                l1 = lists[i]
-                l2 = lists[i + 1] if i + 1 < len(lists) else None
-                mergedLists.append(self.mergeTwoLists(l1, l2))
-            lists = mergedLists
+                list1 = lists[i]
+                list2 = lists[i+1] if i+1 < len(lists) else None
+                mergedList.append(self.mergeTwoLists(list1, list2))
+
+            lists = mergedList
 
         return lists[0]
 
-    def mergeTwoLists(self, l1, l2):
+    def mergeTwoLists(self, list1, list2):
         dummy = ListNode()
-        tail = dummy
-
-        while l1 and l2:
-            if l1.val < l2.val:
-                tail.next = l1
-                l1 = l1.next
+        head = dummy
+        while list1 and list2:
+            if list1.val < list2.val:
+                head.next = list1
+                list1 = list1.next
             else:
-                tail.next = l2
-                l2 = l2.next
-            tail = tail.next
+                head.next = list2
+                list2 = list2.next
+            head = head.next
 
-        if l1:
-            tail.next = l1
-        elif l2:
-            tail.next = l2
+        if list1:
+            head.next = list1
+        if list2:
+            head.next = list2
 
         return dummy.next
 

@@ -20,17 +20,16 @@ class Solution:
             slow = nums[slow]
             fast = nums[nums[fast]]
 
-            if slow == fast:
+            if nums[slow] == nums[fast]:
                 break
 
         slow2 = 0
-
-        while True:
+        while slow2 != slow:
             slow = nums[slow]
             slow2 = nums[slow2]
 
-            if slow == slow2:
-                return slow
+
+        return slow2
 
 
 # @lc code=end

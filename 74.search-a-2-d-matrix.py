@@ -5,38 +5,27 @@
 #
 
 # @lc code=start
-from typing import List
-
-
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        length = len(matrix) * len(matrix[0])
+        l, r = 0, length - 1
 
-        start = 0
-        end = (len(matrix) * len(matrix[0])) - 1
-
-        while start <= end:
-            middle = (start + end) // 2
-            val = self.getMappedValue(middle, matrix)
-
-            if target < val:
-                end = middle - 1
-            elif target > val:
-                start = middle + 1
+        while l <= r:
+            m = (l + r) // 2
+            if self.getValFromMatrix(matrix, m) > target:
+                r = m - 1
+            elif self.getValFromMatrix(matrix, m) < target:
+                l = m + 1
             else:
                 return True
 
         return False
 
-    def getMappedValue(self, indexToMap, matrix):
-        colLen = len(matrix[0])
-
-        if indexToMap == 0:
-            return matrix[0][0]
-
-        row = indexToMap // colLen
-        col = indexToMap % colLen
+    def getValFromMatrix(self, matrix, i):
+        rowLen, colLen = len(matrix), len(matrix[0])
+        row = i // colLen
+        col = i % colLen
 
         return matrix[row][col]
 
-
-# @lc code=end
+        # @lc code=end
